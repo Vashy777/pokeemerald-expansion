@@ -29,6 +29,11 @@ EWRAM_DATA struct BagPocket gBagPockets[POCKETS_COUNT] = {0};
 #include "data/items.h"
 
 // code
+void ItemId_GetHoldEffectParam_Script() // get hold effect for repel
+{
+    VarSet(VAR_RESULT, ItemId_GetHoldEffectParam(VarGet(VAR_0x8004)));
+}
+
 static u16 GetBagItemQuantity(u16 *quantity)
 {
     return gSaveBlock2Ptr->encryptionKey ^ *quantity;

@@ -141,6 +141,8 @@ EWRAM_DATA static u16 sStatsMovesTMHM[NUM_TECHNICAL_MACHINES + NUM_HIDDEN_MACHIN
 EWRAM_DATA static u16 sStatsMovesTMHM_ID[NUM_TECHNICAL_MACHINES + NUM_HIDDEN_MACHINES] = {0};
 EWRAM_DATA static u16 sStatsMovesTutor[TUTOR_MOVE_COUNT] = {0};
 
+extern struct Evolution gEvolutionTable[][EVOS_PER_MON]; // define gEvoultinTable anywhere you use.
+
 // IWRAM common
 // This is written to, but never read.
 u8 gUnusedPokedexU8;
@@ -392,8 +394,8 @@ static void DestroySplitIcon(void); //Physical/Special Split from BE
 
 //Physical/Special Split from BE
 #define TAG_SPLIT_ICONS 30004
-// static const u16 sSplitIcons_Pal[] = INCBIN_U16("graphics/interface/split_icons.gbapal");
-// static const u32 sSplitIcons_Gfx[] = INCBIN_U32("graphics/interface/split_icons.4bpp.lz");
+static const u16 sSplitIcons_Pal[] = INCBIN_U16("graphics/interface/split_icons.gbapal");
+static const u32 sSplitIcons_Gfx[] = INCBIN_U32("graphics/interface/split_icons.4bpp.lz");
 static const struct OamData sOamData_SplitIcons =
 {
     .size = SPRITE_SIZE(16x16),
@@ -2631,7 +2633,7 @@ static void PrintMonDexNumAndName_2(u8 windowId, u8 fontId, const u8* str, u8 le
 
     color[0] = TEXT_COLOR_TRANSPARENT;
     color[1] = TEXT_DYNAMIC_COLOR_6;
-    color[2] = TEXT_COLOR_LIGHT_GREY;
+    color[2] = TEXT_COLOR_LIGHT_GRAY;
     AddTextPrinterParameterized4(windowId, fontId, left * 8 - 3, (top * 8) + 1, 0, 0, color, -1, str);
 }
 
@@ -3500,7 +3502,7 @@ static void PrintInfoScreenTextSmall(const u8* str, u8 left, u8 top)
     u8 color[3];
     color[0] = TEXT_COLOR_TRANSPARENT;
     color[1] = TEXT_DYNAMIC_COLOR_6;
-    color[2] = TEXT_COLOR_LIGHT_GREY;
+    color[2] = TEXT_COLOR_LIGHT_GRAY;
 
     AddTextPrinterParameterized4(0, 0, left, top, 0, 0, color, 0, str);
 }
@@ -4500,8 +4502,8 @@ static void SetTypeIconPosAndPal(u8 typeId, u8 x, u8 y, u8 spriteArrayId)
     sprite = &gSprites[sPokedexView->typeIconSpriteIds[spriteArrayId]];
     StartSpriteAnim(sprite, typeId);
     sprite->oam.paletteNum = sMoveTypeToOamPaletteNum[typeId];
-    sprite->pos1.x = x + 16;
-    sprite->pos1.y = y + 8;
+    sprite->x = x + 16;
+    sprite->y = y + 8;
     SetSpriteInvisibility(spriteArrayId, FALSE);
 }
 static void PrintCurrentSpeciesTypeInfo(void)
@@ -6236,7 +6238,7 @@ static void LoadTilesetTilemapHGSS(u8 page)
 }
 
 //PokedexPlus HGSS_Ui Stats Page
-static const u8 sStatsPageNavigationTextColor[] = {TEXT_COLOR_TRANSPARENT, TEXT_COLOR_WHITE, TEXT_COLOR_DARK_GREY};
+static const u8 sStatsPageNavigationTextColor[] = {TEXT_COLOR_TRANSPARENT, TEXT_COLOR_WHITE, TEXT_COLOR_DARK_GRAY};
 static void StatsPage_PrintAToggleUpdownMoves(void)
 {
     u8 x = 9;
@@ -6602,8 +6604,8 @@ static void PrintStatsScreen_MoveNameAndInfo(u8 taskId)
 
     //Egg/TM/Level/Tutor Item Icon
     gTasks[taskId].data[3] = AddItemIconSprite(ITEM_TAG, ITEM_TAG, item);
-    gSprites[gTasks[taskId].data[3]].pos2.x = 203;
-    gSprites[gTasks[taskId].data[3]].pos2.y = 39;
+    gSprites[gTasks[taskId].data[3]].x = 203;
+    gSprites[gTasks[taskId].data[3]].y = 39;
     gSprites[gTasks[taskId].data[3]].oam.priority = 0;
 
     //Moves selected from move max
@@ -7299,7 +7301,7 @@ static void DestroySplitIcon(void)
 #endif
 
 //PokedexPlus HGSS_Ui Evolution Page
-static const u8 sEvoFormsPageNavigationTextColor[] = {TEXT_COLOR_TRANSPARENT, TEXT_COLOR_WHITE, TEXT_COLOR_DARK_GREY};
+static const u8 sEvoFormsPageNavigationTextColor[] = {TEXT_COLOR_TRANSPARENT, TEXT_COLOR_WHITE, TEXT_COLOR_DARK_GRAY};
 static void EvoFormsPage_PrintAToggleUpdownEvos(void)
 {
     u8 x = 9;

@@ -2853,6 +2853,16 @@ const u8 gStatStageRatios[MAX_STAT_STAGE + 1][2] =
     {40, 10}, // +6, MAX_STAT_STAGE
 };
 
+static const u16 sDeoxysBaseStats[] =
+{
+    [STAT_HP]    = 50,
+    [STAT_ATK]   = 95,
+    [STAT_DEF]   = 90,
+    [STAT_SPEED] = 180,
+    [STAT_SPATK] = 95,
+    [STAT_SPDEF] = 90,
+};
+
 const u16 gLinkPlayerFacilityClasses[NUM_MALE_LINK_FACILITY_CLASSES + NUM_FEMALE_LINK_FACILITY_CLASSES] =
 {
     // Male classes
@@ -3649,6 +3659,7 @@ bool8 ShouldIgnoreDeoxysForm(u8 caseId, u8 battlerId)
 
 static u16 GetDeoxysStat(struct Pokemon *mon, s32 statId)
 {
+	
     s32 ivVal, evVal;
     u16 statValue = 0;
     u8 nature;

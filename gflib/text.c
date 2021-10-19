@@ -179,7 +179,7 @@ static bool32 HasScrollChars(const u8 *text)
 
 bool16 AddTextPrinter(struct TextPrinterTemplate *printerTemplate, u8 speed, void (*callback)(struct TextPrinterTemplate *, u16))
 {
-    int i, j;
+    int i;
     u16 j;
 
     if (!gFonts)

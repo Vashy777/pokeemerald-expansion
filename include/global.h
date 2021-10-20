@@ -1043,7 +1043,9 @@ struct SaveBlock1
     /*0x31DC*/ struct Roamer roamer;
     /*0x31F8*/ struct EnigmaBerry enigmaBerry;
     /*0x322C*/ struct MEventBuffers unk_322C;
+	/*0x3598*/ u8 field_3598[0x180];
     /*0x3???*/ u8 dexSeen[DEX_FLAGS_NO];
+    /*0x3B24*/ u8 seen2[DEX_FLAGS_NO];
     /*0x3???*/ u8 dexCaught[DEX_FLAGS_NO];
     /*0x3???*/ u32 trainerHillTimes[4];
     /*0x3???*/ struct RamScript ramScript;
@@ -1053,6 +1055,8 @@ struct SaveBlock1
     /*0x3???*/ u8 registeredTexts[UNION_ROOM_KB_ROW_COUNT][21];
     /*0x3???*/ struct SaveTrainerHill trainerHill;
     /*0x3???*/ struct WaldaPhrase waldaPhrase;
+    		   u8 dexNavSearchLevels[NUM_SPECIES];
+    		   u8 dexNavChain;
     // sizeof: 0x3???
 };
 

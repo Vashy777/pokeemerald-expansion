@@ -66,6 +66,7 @@ LittlerootTown_EventScript_LeftLabAfterDexUpgrade::
 	return
 
 LittlerootTown_EventScript_HideMapNamePopup::
+    setflag FLAG_ADDED_MATCH_CALL_TO_POKENAV
 	setflag FLAG_HIDE_MAP_NAME_POPUP
 	return
 

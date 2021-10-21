@@ -81,8 +81,8 @@ void FieldClearPlayerInput(struct FieldInput *input)
     input->heldDirection = FALSE;
     input->heldDirection2 = FALSE;
     input->tookStep = FALSE;
-	input->pressedLButton = FALSE;
     input->pressedBButton = FALSE;
+	input->pressedLButton = FALSE;
     input->pressedRButton = FALSE;
     input->input_field_1_1 = FALSE;
     input->input_field_1_2 = FALSE;
@@ -109,7 +109,7 @@ void FieldGetPlayerInput(struct FieldInput *input, u16 newKeys, u16 heldKeys)
             if (newKeys & B_BUTTON)
                 input->pressedBButton = TRUE;
             if (newKeys & L_BUTTON)
-				input->pressedLButton
+				input->pressedLButton = TRUE;
             if (newKeys & R_BUTTON && !FlagGet(FLAG_SYS_DEXNAV_SEARCH))
                 input->pressedRButton = TRUE;
         }

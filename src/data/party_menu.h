@@ -911,7 +911,7 @@ static const union AnimCmd *const sSpriteAnimTable_HeldItem[] =
     sSpriteAnim_HeldMail,
 };
 
-const struct SpriteSheet gSpriteSheet_HeldItem =
+const struct SpriteSheet sSpriteSheet_HeldItem =
 {
     sHeldItemGfx, sizeof(sHeldItemGfx), 0xd750
 };

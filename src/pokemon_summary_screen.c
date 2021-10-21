@@ -323,8 +323,8 @@ static void SummaryScreen_DestroyAnimDelayTask(void);
 
 static void BufferStat(u8 *dst, s8 natureMod, u32 stat, u32 strId, u32 n)
 {
-    static const u8 sTextNatureDown[] = _("{COLOR}{08}");
-    static const u8 sTextNatureUp[] = _("{COLOR}{05}");
+    static const u8 sTextNatureDown[] = _("{COLOR}{15}");
+    static const u8 sTextNatureUp[] = _("{COLOR}{14}");
     static const u8 sTextNatureNeutral[] = _("{COLOR}{01}");
     u8 *txtPtr;
 
@@ -657,7 +657,7 @@ static const struct WindowTemplate sPageSkillsTemplate[] =
         .tilemapTop = 7,
         .width = 6,
         .height = 6,
-        .paletteNum = 6,
+        .paletteNum = 7,
         .baseBlock = 489,
     },
     [PSS_DATA_WINDOW_SKILLS_STATS_RIGHT] = {
@@ -666,7 +666,7 @@ static const struct WindowTemplate sPageSkillsTemplate[] =
         .tilemapTop = 7,
         .width = 3,
         .height = 6,
-        .paletteNum = 6,
+        .paletteNum = 3,
         .baseBlock = 525,
     },
     [PSS_DATA_WINDOW_EXP] = {

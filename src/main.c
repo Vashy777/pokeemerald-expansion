@@ -1,6 +1,8 @@
 #include "global.h"
 #include "crt0.h"
+#include "main_menu.h"
 #include "malloc.h"
+#include "new_game.h"
 #include "link.h"
 #include "link_rfu.h"
 #include "librfu.h"
@@ -16,6 +18,7 @@
 #include "load_save.h"
 #include "gpu_regs.h"
 #include "agb_flash.h"
+#include "save.h"
 #include "sound.h"
 #include "battle.h"
 #include "battle_controllers.h"
@@ -25,6 +28,9 @@
 #include "trainer_hill.h"
 #include "constants/rgb.h"
 
+EWRAM_DATA u8 gSoftResetFlag;
+
+static void CB2_PostSoftResetInit(void);
 static void VBlankIntr(void);
 static void HBlankIntr(void);
 static void VCountIntr(void);
@@ -89,7 +95,7 @@ void AgbMain()
     // Modern compilers are liberal with the stack on entry to this function,
     // so RegisterRamReset may crash if it resets IWRAM.
 #if !MODERN
-    RegisterRamReset(RESET_ALL);
+ //   RegisterRamReset(RESET_ALL); //uncommit if you want to turn reset all back on.
 #endif //MODERN
     *(vu16 *)BG_PLTT = RGB_WHITE; // Set the backdrop to white on startup
     InitGpuRegManager();
@@ -171,8 +177,15 @@ static void InitMainCallbacks(void)
     gTrainerHillVBlankCounter = NULL;
     gMain.vblankCounter2 = 0;
     gMain.callback1 = NULL;
-    SetMainCallback2(CB2_InitCopyrightScreenAfterBootup);
-    gSaveBlock2Ptr = &gSaveblock2;
+	
+	if(gSoftResetFlag)
+	{
+	    SetMainCallback2(CB2_PostSoftResetInit);
+	}else{
+	    SetMainCallback2(CB2_InitCopyrightScreenAfterBootup);
+	}
+	
+    gSaveBlock2Ptr = &gSaveblock2;	
     gPokemonStoragePtr = &gPokemonStorage;
 }
 
@@ -431,4 +444,16 @@ void DoSoftReset(void)
 void ClearPokemonCrySongs(void)
 {
     CpuFill16(0, gPokemonCrySongs, MAX_POKEMON_CRIES * sizeof(struct PokemonCrySong));
+}
+
+static void CB2_PostSoftResetInit(void)
+{
+    SetSaveBlocksPointers(sub_815355C());
+    ResetMenuAndMonGlobals();
+    Save_ResetSaveCounters();
+    Save_LoadGameData(SAVE_NORMAL);
+    if (gSaveFileStatus == SAVE_STATUS_EMPTY || gSaveFileStatus == SAVE_STATUS_CORRUPT)
+    Sav2_ClearSetDefault();
+    SetPokemonCryStereo(gSaveBlock2Ptr->optionsSound);
+    SetMainCallback2(CB2_InitMainMenu);
 }
